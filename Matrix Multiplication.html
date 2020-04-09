@@ -1,0 +1,391 @@
+<html>
+
+<head>
+	
+
+
+	<script src="https://d3js.org/d3.v5.min.js">
+
+	</script>
+
+	
+</head>
+
+<body>
+	<svg id="svg_chart">
+	
+	</svg>
+
+    	<p>N: <input min=4 max=16 value=4 type="range" id="slider"></p>
+
+	<p>M: <input min=4 max=16 value=4 type="range" id="slider1"></p>
+
+	<p>P: <input min=4 max=16 value=4 type="range" id="slider2"></p>
+
+	<button type="button" onclick="My_function()">STEP</button>
+
+	<button  onclick="play()" id="ply" value="Play">Play</button>
+
+	<button  onclick="reset()" id="rst" value="Reset">Reset</button>
+
+
+	
+
+
+
+	<script>   
+
+		svg = d3.select("#svg_chart").attr("width", 1200).attr("height", 1000).style("background", "aqua");
+		svg.append('rect')
+  		.attr('fill', 'none')
+  		.attr('stroke', 'black')
+  		.attr('x', 20)
+  		.attr('y', 20)
+  		.attr('width', 350)
+  		.attr('height', 950);
+
+		 svg.append('rect')
+  		.attr('fill', 'none')
+  		.attr('stroke', 'black')
+  		.attr('x', 430)
+  		.attr('y', 20)
+  		.attr('width', 350)
+  		.attr('height', 950);
+
+		svg.append('rect')
+  		.attr('fill', 'none')
+  		.attr('stroke', 'black')
+  		.attr('x', 830)
+  		.attr('y', 20)
+  		.attr('width', 350)
+  		.attr('height', 950);
+
+		svg.append("text")             
+      		.attr("transform","translate(380,500)")
+                .text("X").attr("font-size", "50px");
+
+		svg.append("text")             
+      		.attr("transform","translate(790,500)")
+                .text("=").attr("font-size", "50px");
+
+		
+		
+
+		
+
+                      var arr1 = [];
+		      var arr2 = [];
+		      var arr3 = [];
+		      	
+		      var count;
+		      var count2;
+		      var count1;
+		      var count5;		
+		      var playing = false;	
+		      var counter = 0;
+		      var flag = 1;		
+		      
+			var duration = 400;
+			var row = 0;
+			var col = 0;
+		 	
+		matrix_multiplication();
+	        //whenever you move your slider the function generate_bezier_curve will be invoked
+	        d3.select("#slider").on("input", matrix_multiplication);
+
+		d3.select("#slider1").on("input", matrix_multiplication);
+
+		d3.select("#slider2").on("input", matrix_multiplication);
+			
+	
+	
+
+				      
+		      function matrix_multiplication() {
+			counter = 0;
+			step_val = 0;
+			console.log('steval');
+			console.log(step_val);
+			arr1 = [];
+		      	arr2 = [];
+		      	arr3 = [];
+			arr5 = [];
+			row = 0;
+			col = 0;
+			console.log(arr5);
+			console.log(row);
+			console.log(col);
+			var circle_update6 = svg.selectAll(".c6").data(arr5); 
+	    		circle_update6.enter().append("circle").merge(circle_update6)
+	    		.attr("r",5)	
+	    		.attr("cx",function(d,i){return d.cx;})
+	    		.attr("cy",function(d,i){return d.cy;})
+	    		.attr("fill" ,"red").classed("c6",true)
+	    		circle_update6.exit().remove();
+			
+			
+			
+			
+	              //logging the value of the slider
+			var count = d3.select("#slider").property("value");
+			var count2 = d3.select("#slider1").property("value");
+			var count4 = d3.select("#slider2").property("value");
+                      
+	              console.log(count);
+			count5 = parseInt(count4)
+		          
+			count1 = parseInt(count)
+			console.log(count1)
+			var a = 300/(count2 -1)
+			
+			var b = count1 - 1
+			var a1 = 900/b
+			for(j=0;j<count2;j++){
+				for(i=0;i<count1;i++){
+			    	    var e = j*a+50;
+			    	    var f = i*a1+50;
+			    	    var points = {cx:e,cy:f};
+			    	    arr1.push(points);
+			}
+			}
+			console.log('Array1');					
+			console.log(arr1);
+			var circle_update = svg.selectAll(".c1").data(arr1); 
+	    		circle_update.enter().append("circle").merge(circle_update)
+	    		.attr("r",3)	
+	    		.attr("cx",function(d,i){return d.cx;})
+	    		.attr("cy",function(d,i){return d.cy;})
+	    		.attr("fill" ,"black").classed("c1",true)
+	    		circle_update.exit().remove();
+			
+			
+
+			  
+			count3 = parseInt(count2)
+			console.log(count3)
+			var pa = 900
+			var pb = count3 - 1
+			var pa1 = 900/pb
+			var za = 300/(count4 - 1)
+			for(n=0;n<count4;n++){
+			for(m=0;m<count3;m++){
+			    var pe = za*n+450;
+			    var pf = m*pa1+50;
+			    var points4 = {cx:pe,cy:pf};
+			    arr2.push(points4);
+			}
+			}	
+			console.log('Array2');				
+			console.log(arr2);
+			var circle_update1 = svg.selectAll(".c2").data(arr2); 
+	    		circle_update1.enter().append("circle").merge(circle_update1)
+	    		.attr("r",3)	
+	    		.attr("cx",function(d,i){return d.cx;})
+	    		.attr("cy",function(d,i){return d.cy;})
+	    		.attr("fill" ,"black").classed("c2",true)
+	    		circle_update1.exit().remove();
+
+			var l1 = arr1.length ;
+			var l11 = l1/count ; 
+			var l2 = arr2.length ;
+			var l22 = l2/count2 ; 
+		
+			
+			console.log(l1);
+			console.log(l2);
+			console.log('pr');
+			console.log(l11);
+			console.log(l22);
+			
+			var valx1 = 300/(l22 - 1) ; 
+			var valy1 = 900/(count - 1) ;  
+			
+			if (l11 == count2) {
+				
+				for(i1=0;i1<l22;i1++){
+				     for(i2=0;i2<count;i2++){
+					 var x1 = valx1*i1 + 850;
+				 	 var y1 = valy1*i2 + 50;
+				 	 var pnt = {cx:x1,cy:y1};
+				 	 arr3.push(pnt);
+
+			}		  
+			}
+			console.log('Array3')
+			console.log(arr3);
+			var circle_update3 = svg.selectAll(".c4").data(arr3); 
+	    		circle_update3.enter().append("circle").merge(circle_update3)
+	    		.attr("r",3)	
+	    		.attr("cx",function(d,i){return d.cx;})
+	    		.attr("cy",function(d,i){return d.cy;})
+	    		.attr("fill" ,"black").classed("c4",true)
+	    		circle_update3.exit().remove();		
+			}
+
+			}
+			
+                        
+			var step_val = 0;
+			var arr5 = [];
+			
+                        
+
+			function My_function() {
+			
+			
+			var l1 = arr1.length ;
+			var l11 = l1/count1 ;
+			var l2 = arr2.length ;
+			var l22 = l2/count3 ; 
+			var l3 = arr3.length ;
+			var l33 = l3/count5 ;
+			var d1 = [];
+			var d2 = [];
+			var d5 = [];
+			var d4 = [];
+
+			var stp1 = step_val%count5 
+			var diff1 = step_val - stp1;				
+ 			var quo1 = diff1/count5
+			console.log('pp');
+			console.log(l22);
+			console.log(l2);
+			console.log(count2);
+			console.log('lek');
+			console.log(arr5);
+			
+
+			   	
+			    	
+                        for(i=0;i<count1;i++)
+			   {	
+			   for(j=0;j<l11;j++)	
+			{
+				d1.push(arr1[i+j*count1])
+			} 
+			d2.push(d1);
+			d1 = [];
+			} 
+
+
+			for(i=0;i<count3;i++)
+			   {	
+			   for(j=0;j<l22;j++)	
+			{
+				d5.push(arr2[i+j*count3])
+			} 
+			d4.push(d5);
+			d5 = [];
+			}  
+			console.log(d2);
+			console.log(d4); 
+
+
+			 
+			    			
+			
+			svg.selectAll(".c1").transition().duration(400)
+          		.attr("fill", function(d,i){ if (d.cy == d2[row][0].cy) return "red";})
+          		.attr("r", function(d,i){ if (d.cy == d2[row][0].cy) return 5; else return 3;})
+          		.transition().duration(400)
+          		.attr("fill" ,"black")
+          		.attr("r", 3);
+
+			svg.selectAll(".c2").transition().duration(400)
+          		.attr("fill", function(d,i){ if (d.cx == d4[0][col].cx) return "red";})
+          		.attr("r", function(d,i){ if (d.cx == d4[0][col].cx) return 5; else return 3;})
+          		.transition().duration(400)
+          		.attr("fill" ,"black")
+          		.attr("r", 3);
+
+			arr5.push(arr3[(stp1*l33)+quo1])
+
+			console.log('Array5');
+			console.log(arr5);
+			console.log(step_val);
+			console.log(stp1);
+
+			var circle_update5 = svg.selectAll(".c6").data(arr5); 
+	    		circle_update5.enter().append("circle").merge(circle_update5)
+	    		.attr("r",5)	
+	    		.attr("cx",function(d,i){return d.cx;})
+	    		.attr("cy",function(d,i){return d.cy;})
+	    		.attr("fill" ,"red").classed("c6",true)
+	    		circle_update5.exit().remove();
+			
+			col++;
+			if(col == count5){
+				row++;
+				col=0; }
+
+			
+			step_val++;
+			counter++;
+			console.log(counter);
+			console.log('vgf')
+			console.log(count5);
+			console.log(count1);
+			var pra = (count5*count1)
+			console.log(pra);
+			console.log(flag);
+
+			if (playing && counter != pra)
+        		setTimeout(step, 1000)
+			else if(flag == 0) {
+				console.log('ooo');
+				d3.select("#ply").text("Play")
+        		  d3.select("#ply").property("value", "Play")
+        			playing = false
+				row = 0;
+				col=0;
+				flag=1;
+				counter=0;
+				step_val = 0;
+				arr5=[];
+				
+			
+			}
+			}
+			
+			
+			function play()
+			{
+			   
+	
+			if (d3.select("#ply").property("value") == "Play") {
+				d3.select("#ply").text("Pause")
+        		    d3.select("#ply").property("value", "Pause")
+        		playing = true
+			flag = 0;
+        		step()
+			}
+			else {
+			d3.select("#ply").text("Play")
+        			d3.select("#ply").property("value", "Play")
+        		playing = false
+			flag = 1;
+			}
+			}
+
+			function step() {
+				My_function()
+			}
+
+			
+		        function reset() {
+				location.reload()
+			}
+	
+	
+	
+			   	
+		
+			
+			
+</script>
+	 	
+
+    	
+</body>
+
+</html>
